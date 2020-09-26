@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">TVMazeApp</string>
+    <string name="app_title">TVMAZE</string>
+
+    <!--Login -->
+    <string name="welcome_message">¡Welcome back!</string>
+    <string name="login">Login</string>
+    <string name="loginFingerPrint">Login with fingerprint</string>
+    <string name="password">Password</string>
+    <string name="errConnect">You have no internet connection</string>
+    <string name="noPassword">Type the password please</string>
+    <string name="wrongPassword">Wrong password</string>
+    <string name="errorAuth">Ups! we have an authentication error: </string>
+    <string name="errorAuthFailed">Ups! Authentication failed </string>
+    <string name="biometricTitle">BioMetric Login </string>
+    <string name="biometricSubtile">Login using your fingerprint </string>
+    <string name="biometricNegativeButton">I want to use my password </string>
+
+
+
+    <!-- Settings Fragment -->
+    <string name="set_message_password">¡Please set a password!</string>
+    <string name="set_button_password">Set Password</string>
+    <string name="ok_message_pass">Password changed successfully</string>
+    <string name="bad_message_pass">Upss! An error has occurred</string>
+
+    <!-- PREFERENCES -->
+    <string name="noData">noData</string>
+    <string name="dataSesion">dataSesion</string>
+    <string name="passwordSesion">passwordSesion</string>
+
+    <!-- MENU -->
+    <string name="settingsMenu">Settings</string>
+</resources>
