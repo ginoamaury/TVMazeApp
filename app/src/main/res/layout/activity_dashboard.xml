@@ -55,7 +55,15 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            style="@style/Widget.MaterialComponents.TabLayout.Colored"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabRippleColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 

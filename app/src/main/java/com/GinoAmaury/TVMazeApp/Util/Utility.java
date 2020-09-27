@@ -9,13 +9,24 @@ import android.net.NetworkInfo;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.GinoAmaury.TVMazeApp.Model.Object.Search;
 import com.GinoAmaury.TVMazeApp.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 public class Utility {
+
+    //Static String Card Product
+    public static final String CLICKCARD="cardShow";
+    public static final String CLICKADDFAV="addShowFavorite";
+
 
 
     public static String getPreference(Context c, String preference ,String key){
@@ -46,8 +57,53 @@ public class Utility {
         snack.show();
     }
 
+    public static void showSnackbar (View v, Context context, int idString){
+        Snackbar.make(v, context.getResources().getString(idString), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
 
-    public static void GoToNextActivityCleanStack(Activity activity, Class clase, boolean finaliza, ArrayList<Extra> params)
+    public static void showImage (View itemView,ImageView imageView,String url){
+        RequestOptions requestOptions = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .signature(new ObjectKey("GLIDEIMAGES"));
+
+        Glide.with(itemView).load(url)
+                .thumbnail(0.25f)
+                .error(R.drawable.ic_no_photo)
+                .fallback(R.drawable.ic_no_photo)
+                .apply(requestOptions).into(imageView);
+    }
+
+    public static void showImage (Context itemView,ImageView imageView,String url){
+        RequestOptions requestOptions = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .signature(new ObjectKey("GLIDEIMAGES"));
+
+        Glide.with(itemView).load(url)
+                .thumbnail(0.25f)
+                .error(R.drawable.ic_no_photo)
+                .fallback(R.drawable.ic_no_photo)
+                .apply(requestOptions).into(imageView);
+    }
+
+    public static void goToNextActivityCleanStackShow(Activity activity, Class clase, boolean finaliza, ArrayList<Extra> params, Search show)
+    {
+        Intent intent = new Intent(activity, clase ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("SHOW", show);
+        if(params!=null){
+            for (Extra param: params) {
+                intent.putExtra(param.getClave(),param.getValor());
+            }
+        }
+        activity.startActivity(intent);
+
+        if (finaliza){
+            activity.finish();
+        }
+    }
+
+
+    public static void goToNextActivityCleanStack(Activity activity, Class clase, boolean finaliza, ArrayList<Extra> params)
     {
         Intent intent = new Intent(activity, clase ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         if(params!=null){

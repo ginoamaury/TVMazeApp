@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="@dimen/mtrl_card_spacing"
+    android:layout_marginTop="@dimen/mtrl_card_spacing"
+    android:layout_marginBottom="@dimen/mtrl_card_spacing"
+    android:layout_marginRight="4dp"
+    android:checkable="true"
+    android:clickable="true"
+    android:elevation="10dp"
+    android:focusable="true"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="5dp"
+    app:shapeAppearance="@style/MediumComponent"
+    app:strokeWidth="5dp">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_moview"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimaryTrans"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleEpisode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="4dp"
+                android:text="1. Pilot Season 1"
+                android:layout_gravity="bottom"
+
+                android:textColor="#ffe3e3e3"
+                style="@style/text_dark"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/Season"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="4dp"
+                android:text="1. Pilot Season 1"
+                android:layout_gravity="bottom"
+                android:textColor="#ffe3e3e3"
+                style="@style/text_dark"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -24,8 +24,8 @@ import java.util.concurrent.Executor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.GinoAmaury.TVMazeApp.Util.Utility.GoToNextActivityCleanStack;
 import static com.GinoAmaury.TVMazeApp.Util.Utility.getPreference;
+import static com.GinoAmaury.TVMazeApp.Util.Utility.goToNextActivityCleanStack;
 import static com.GinoAmaury.TVMazeApp.Util.Utility.showSnackbarTopMsg;
 
 public class MainActivity extends AppCompatActivity implements ILoginView, View.OnClickListener {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getPreference(this,getString(R.string.dataSesion),getString(R.string.passwordSesion)).equals(getString(R.string.noData))){
-            GoToNextActivityCleanStack(this,DashboardActivity.class,true,null);
+            goToNextActivityCleanStack(this,DashboardActivity.class,true,null);
         }else{
             setContentView(R.layout.activity_main);
             ButterKnife.bind(this);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
                     public void onAuthenticationSucceeded(
                             @NonNull BiometricPrompt.AuthenticationResult result) {
                         super.onAuthenticationSucceeded(result);
-                        GoToNextActivityCleanStack(MainActivity.this,DashboardActivity.class,true,null);
+                        goToNextActivityCleanStack(MainActivity.this,DashboardActivity.class,true,null);
                     }
 
                     @Override
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
         if(result){
             showSnackbarTopMsg(getCurrentFocus(),this,getResources().getString(R.string.wrongPassword));
         }else{
-            GoToNextActivityCleanStack(this, DashboardActivity.class,true,null);
+            goToNextActivityCleanStack(this, DashboardActivity.class,true,null);
         }
     }
 
