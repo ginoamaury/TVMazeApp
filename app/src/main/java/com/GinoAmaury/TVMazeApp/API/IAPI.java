@@ -18,7 +18,7 @@ public interface IAPI {
     Call<List<Search>> getShows(@Query("page") int page);
 
     @GET("search/shows")
-    Call<List<Search>> getQuery(@Query("q") String query);
+    Call<List<Search>> getShowsSearch(@Query("q") String query);
 
     @GET("shows/{id}")
     Call<Search> getShow(@Path("id") int id);

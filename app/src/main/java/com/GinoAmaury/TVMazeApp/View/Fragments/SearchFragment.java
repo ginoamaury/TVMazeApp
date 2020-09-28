@@ -62,7 +62,6 @@ public class SearchFragment extends Fragment {
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
