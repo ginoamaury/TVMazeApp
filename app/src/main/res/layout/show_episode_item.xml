@@ -19,6 +19,7 @@
 
 
         <ImageView
+            android:id="@+id/episodeImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/ic_moview"
@@ -37,24 +38,40 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="4dp"
-                android:text="1. Pilot Season 1"
                 android:layout_gravity="bottom"
-
                 android:textColor="#ffe3e3e3"
                 style="@style/text_dark"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/Season"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="4dp"
-                android:text="1. Pilot Season 1"
                 android:layout_gravity="bottom"
-                android:textColor="#ffe3e3e3"
-                style="@style/text_dark"
-                android:textStyle="bold"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="4dp"
+                    android:text="@string/episodesSeason"
+                    android:textColor="#ffe3e3e3"
+                    style="@style/text_dark"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/season"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="4dp"
+                    android:textColor="#ffe3e3e3"
+                    style="@style/text_dark"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

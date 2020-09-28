@@ -16,6 +16,14 @@
     <string name="biometricSubtile">Login using your fingerprint </string>
     <string name="biometricNegativeButton">I want to use my password </string>
 
+    <!-- Episodes-->
+    <string name="episodesSeason">Season</string>
+    <string name="summary">Summary</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="errPrevious">Upss! We are already on the first page</string>
+    <string name="errShows">Upss!We didnt find any more shows</string>
+
 
     <!-- Settings Fragment -->
     <string name="set_message_password">¡Please set a password!</string>

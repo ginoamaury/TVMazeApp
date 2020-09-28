@@ -113,11 +113,20 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public void setShowData(Search show){
             String name = show.getName();
             titleShow.setText(name);
-
-            String urlImage = show.getImage().getOriginal();
-            Log.d("ERROR IMAGE","URL: "+urlImage);
-
-            Utility.showImage(itemView,showImage,urlImage);
+            if(show.getImage()!= null){
+                if(show.getImage().getMedium()!=null && show.getImage().getOriginal()!=null ){
+                    String urlImage = show.getImage().getMedium();
+                    Utility.showImage(itemView,showImage,urlImage);
+                }else if(show.getImage().getMedium()==null && show.getImage().getOriginal()!=null ){
+                    String urlImage = show.getImage().getOriginal();
+                    Utility.showImage(itemView,showImage,urlImage);
+                }else if(show.getImage().getMedium()!=null && show.getImage().getOriginal()==null ){
+                    String urlImage = show.getImage().getMedium();
+                    Utility.showImage(itemView,showImage,urlImage);
+                }
+            }else{
+                Utility.showImage(itemView,showImage,"noimage");
+            }
 
         }
 

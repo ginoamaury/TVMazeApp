@@ -13,6 +13,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.GinoAmaury.TVMazeApp.Interfaces.Shows.IShowView;
 import com.GinoAmaury.TVMazeApp.Model.Object.Search;
@@ -29,15 +31,26 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShowsFragment extends Fragment implements IShowView, IOnShowClick {
+import static com.GinoAmaury.TVMazeApp.Util.Utility.showSnackbar;
+import static com.GinoAmaury.TVMazeApp.Util.Utility.showSnackbarTopMsg;
+
+public class ShowsFragment extends Fragment implements IShowView, IOnShowClick, View.OnClickListener {
 
     @BindView(R.id.recyclerShows)
     RecyclerView recyclerViewShows;
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.layoutLeft)
+    LinearLayout layoutLeft;
+    @BindView(R.id.layoutRigth)
+    LinearLayout layoutRigth;
+    @BindView(R.id.numberPage)
+    TextView numberPage;
 
     private ShowsAdapter showsAdapter;
     private ShowPresenter showPresenter;
+    private int currentPage;
+    private int max;
 
     public ShowsFragment() {}
 
@@ -52,20 +65,44 @@ public class ShowsFragment extends Fragment implements IShowView, IOnShowClick {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_shows, container, false);
         ButterKnife.bind(this,view);
+        currentPage = 0;
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        int page = currentPage;
+        numberPage.setText(String.valueOf(page+1));
         showPreviewLoading();
         getShows();
+        refreshView();
+        initOnclickLayouts();
+    }
+
+    private void initOnclickLayouts() {
+        layoutLeft.setOnClickListener(this);
+        layoutRigth.setOnClickListener(this);
     }
 
     private void getShows(){
         showPresenter = new ShowPresenter(this);
-        showPresenter.getShows(0);
+        showPresenter.getShows(currentPage);
     }
+
+    private void refreshView (){
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showPreviewLoading();
+                getShows();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+
 
     private void showPreviewLoading (){
         recyclerViewShows.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -87,6 +124,8 @@ public class ShowsFragment extends Fragment implements IShowView, IOnShowClick {
             showsAdapter = new ShowsAdapter(shows,this,0);
             recyclerViewShows.setItemAnimator(new DefaultItemAnimator());
             recyclerViewShows.setAdapter(showsAdapter);
+        }else{
+            showSnackbar(getView(),getContext(),R.string.errShows);
         }
 
     }
@@ -94,5 +133,31 @@ public class ShowsFragment extends Fragment implements IShowView, IOnShowClick {
     @Override
     public void onShowClick(int pos, String typeClick) {
         Utility.goToNextActivityCleanStackShow(getActivity(), ShowActivity.class,false,null,showsAdapter.getShow(pos));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.layoutRigth:
+                if(currentPage>=0){
+                    currentPage++;
+                    int page = currentPage;
+                    numberPage.setText(String.valueOf(page+1));
+                    showPreviewLoading();
+                    getShows();
+                }
+                break;
+            case R.id.layoutLeft:
+                if(currentPage>0){
+                    currentPage--;
+                    int page = currentPage;
+                    numberPage.setText(String.valueOf(page+1));
+                    showPreviewLoading();
+                    getShows();
+                }else{
+                    showSnackbar(getView(),getContext(),R.string.errPrevious);
+                }
+                break;
+        }
     }
 }

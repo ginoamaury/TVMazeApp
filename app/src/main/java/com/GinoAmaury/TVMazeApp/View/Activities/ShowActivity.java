@@ -58,7 +58,23 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void setImage (){
-        if(show != null) Utility.showImage(getApplicationContext(),showImage,show.getImage().getOriginal());
+
+        if(show != null){
+            if(show.getImage()!= null){
+                if(show.getImage().getMedium()!=null && show.getImage().getOriginal()!=null ){
+                    String urlImage = show.getImage().getOriginal();
+                    Utility.showImage(getApplicationContext(),showImage,urlImage);
+                }else if(show.getImage().getMedium()==null && show.getImage().getOriginal()!=null ){
+                    String urlImage = show.getImage().getOriginal();
+                    Utility.showImage(getApplicationContext(),showImage,urlImage);
+                }else if(show.getImage().getMedium()!=null && show.getImage().getOriginal()==null ){
+                    String urlImage = show.getImage().getMedium();
+                    Utility.showImage(getApplicationContext(),showImage,urlImage);
+                }
+            }else{
+                Utility.showImage(getApplicationContext(),showImage,"noimage");
+            }
+        }
     }
 
     private void addToolbar(){

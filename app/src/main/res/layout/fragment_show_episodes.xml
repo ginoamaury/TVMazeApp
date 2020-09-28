@@ -34,17 +34,28 @@ tools:context=".View.Fragments.ShowEpisodesFragment">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/titleShow" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerEpisodes"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:paddingRight="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chip" />
+        app:layout_constraintTop_toBottomOf="@id/chip">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerEpisodes"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
 
 

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,8 @@ public class ShowInfoFragment extends Fragment {
     TextView titleShow;
     @BindView(R.id.chip)
     Chip chip;
+    @BindView(R.id.contentSummary)
+    TextView summary;
 
     public ShowInfoFragment() {
     }
@@ -68,6 +71,7 @@ public class ShowInfoFragment extends Fragment {
         if(show != null){
             titleShow.setText(show.getName());
             chip.setText(show.getGenres().toString());
+            summary.setText(Html.fromHtml(show.getSummary()));
         }
     }
 }
