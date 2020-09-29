@@ -114,7 +114,6 @@ public class SearchShowFragment extends Fragment implements ISearchShowView, Edi
     @Override
     public void showResult(ArrayList<Show> shows) {
         if(shows != null){
-            Log.d("SHOW", shows.get(0).getName() +"-");
             showsAdapter = new ShowsAdapter(shows,this,0,getContext());
             recyclerViewShows.setItemAnimator(new DefaultItemAnimator());
             recyclerViewShows.setAdapter(showsAdapter);

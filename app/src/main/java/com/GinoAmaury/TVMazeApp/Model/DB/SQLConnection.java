@@ -106,7 +106,6 @@ public class SQLConnection  extends SQLiteOpenHelper {
             return true;
         }catch (Exception e){
             e.printStackTrace();
-            Log.d("ERROR", "DELETE FAV");
             return false;
         }finally {
             db.endTransaction();
