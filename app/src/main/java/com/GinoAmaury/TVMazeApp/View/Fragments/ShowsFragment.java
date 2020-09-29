@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.GinoAmaury.TVMazeApp.Interfaces.Favorite.IFavoriteView;
 import com.GinoAmaury.TVMazeApp.Interfaces.Shows.IShowView;
 import com.GinoAmaury.TVMazeApp.Model.Object.Show;
+import com.GinoAmaury.TVMazeApp.Presenter.FavoritePresenter;
 import com.GinoAmaury.TVMazeApp.Presenter.ShowPresenter;
 import com.GinoAmaury.TVMazeApp.R;
 import com.GinoAmaury.TVMazeApp.Util.Utility;
@@ -69,14 +71,19 @@ public class ShowsFragment extends Fragment implements IShowView, IOnShowClick, 
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        int page = currentPage;
-        numberPage.setText(String.valueOf(page+1));
+    public void onResume() {
+        super.onResume();
         showPreviewLoading();
         getShows();
         refreshView();
         initOnclickLayouts();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        int page = currentPage;
+        numberPage.setText(String.valueOf(page+1));
     }
 
     private void initOnclickLayouts() {
@@ -120,7 +127,7 @@ public class ShowsFragment extends Fragment implements IShowView, IOnShowClick, 
     @Override
     public void showResult(ArrayList<Show> shows) {
         if(shows != null){
-            showsAdapter = new ShowsAdapter(shows,this,0);
+            showsAdapter = new ShowsAdapter(shows,this,0,getContext());
             recyclerViewShows.setItemAnimator(new DefaultItemAnimator());
             recyclerViewShows.setAdapter(showsAdapter);
         }else{

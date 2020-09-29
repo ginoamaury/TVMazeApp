@@ -14,6 +14,14 @@ public class Links implements Serializable
     @SerializedName("previousepisode")
     @Expose
     private Previousepisode previousepisode;
+
+    @SerializedName("show")
+    @Expose
+    private Show show;
+    @SerializedName("character")
+    @Expose
+    private Character character;
+
     private final static long serialVersionUID = -8400344218988868130L;
 
     public Self getSelf() {
@@ -31,6 +39,24 @@ public class Links implements Serializable
     public void setPreviousepisode(Previousepisode previousepisode) {
         this.previousepisode = previousepisode;
     }
+
+    public Show getShow() {
+        return show;
+    }
+
+    public void setShow(Show show) {
+        this.show = show;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+
+
 
 
 }

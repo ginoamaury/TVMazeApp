@@ -1,5 +1,6 @@
 package com.GinoAmaury.TVMazeApp.View.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -113,7 +115,7 @@ public class SearchShowFragment extends Fragment implements ISearchShowView, Edi
     public void showResult(ArrayList<Show> shows) {
         if(shows != null){
             Log.d("SHOW", shows.get(0).getName() +"-");
-            showsAdapter = new ShowsAdapter(shows,this,0);
+            showsAdapter = new ShowsAdapter(shows,this,0,getContext());
             recyclerViewShows.setItemAnimator(new DefaultItemAnimator());
             recyclerViewShows.setAdapter(showsAdapter);
         }else{
@@ -127,10 +129,13 @@ public class SearchShowFragment extends Fragment implements ISearchShowView, Edi
             String input = inputSearch.getText().toString();
             showPreviewLoading();
             getShows(input);
+            Utility.hideKeyboard(getActivity());
             return true;
         }
         return false;
     }
+
+
 
     @Override
     public void onShowClick(int pos, String typeClick) {

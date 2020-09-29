@@ -27,6 +27,8 @@ public class DialogEpisodeFragment extends DialogFragment {
     TextView season;
     @BindView(R.id.sumaryContent)
     TextView sumaryContent;
+    @BindView(R.id.sumary)
+    TextView sumary;
     @BindView(R.id.imagerEpísode)
     ImageView image;
 
@@ -62,8 +64,11 @@ public class DialogEpisodeFragment extends DialogFragment {
 
     private void setDataEpisode (View v){
         if(episode != null){
-            String name = episode.getNumber() + ". "+ episode.getName();
-            titleEpisode.setText(name);
+            if(episode.getName() != null) {
+                String name = episode.getNumber() + ". "+ episode.getName();
+                titleEpisode.setText(name);
+            }
+
             String sea = getContext().getString(R.string.episodesSeason) + ": "+ episode.getSeason();
             season.setText(sea);
 
@@ -81,8 +86,10 @@ public class DialogEpisodeFragment extends DialogFragment {
             }else{
                 Utility.showImage(v,image,"noimage");
             }
-
-            sumaryContent.setText(Html.fromHtml(episode.getSummary()));
+            if(episode.getSummary()!=null){
+                sumary.setVisibility(View.VISIBLE);
+                sumaryContent.setText(Html.fromHtml(episode.getSummary()));
+            }
         }
     }
 

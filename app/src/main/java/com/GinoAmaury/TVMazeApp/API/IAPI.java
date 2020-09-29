@@ -1,5 +1,6 @@
 package com.GinoAmaury.TVMazeApp.API;
 
+import com.GinoAmaury.TVMazeApp.Model.Object.Cast;
 import com.GinoAmaury.TVMazeApp.Model.Object.Episode;
 import com.GinoAmaury.TVMazeApp.Model.Object.People;
 import com.GinoAmaury.TVMazeApp.Model.Object.Search;
@@ -31,4 +32,9 @@ public interface IAPI {
     // SEARCH URLS
     @GET("search/people")
     Call<List<People>> getPersonSearch(@Query("q") String query);
+
+    // SEARCH SHOWS ACTOR
+    @GET("people/{id}/castcredits?embed=show")
+    Call<List<Cast>> getShowsActor(@Path("id") int id);
+
 }

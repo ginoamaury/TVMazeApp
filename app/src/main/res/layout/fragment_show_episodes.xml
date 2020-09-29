@@ -29,10 +29,26 @@ tools:context=".View.Fragments.ShowEpisodesFragment">
     android:textColor = "@color/colorPrimary"
     app:chipIconSize="20dp"
     app:iconStartPadding = "4dp"
+    android:visibility="gone"
     app:chipIconTint="@color/colorPrimary"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/titleShow" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chipSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="22:00"
+        app:chipIcon="@drawable/ic_clock"
+        android:textColor = "@color/colorPrimary"
+        app:chipIconSize="20dp"
+        android:visibility="gone"
+        app:iconStartPadding = "4dp"
+        app:chipIconTint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefresh"
@@ -42,7 +58,7 @@ tools:context=".View.Fragments.ShowEpisodesFragment">
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chip">
+        app:layout_constraintTop_toBottomOf="@id/chipSchedule">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerEpisodes"

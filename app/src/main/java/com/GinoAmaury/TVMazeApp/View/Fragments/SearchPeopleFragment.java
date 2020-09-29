@@ -24,6 +24,7 @@ import com.GinoAmaury.TVMazeApp.Model.Object.Person;
 import com.GinoAmaury.TVMazeApp.Presenter.SearchActorPresenter;
 import com.GinoAmaury.TVMazeApp.Presenter.SearchShowPresenter;
 import com.GinoAmaury.TVMazeApp.R;
+import com.GinoAmaury.TVMazeApp.Util.Utility;
 import com.GinoAmaury.TVMazeApp.View.Adapters.ActorsAdapter;
 import com.GinoAmaury.TVMazeApp.View.Adapters.IOnActorClick;
 import com.GinoAmaury.TVMazeApp.View.Adapters.ShowsAdapter;
@@ -128,6 +129,7 @@ public class SearchPeopleFragment extends Fragment implements ISearchActorView, 
             String input = inputSearch.getText().toString();
             showPreviewLoading();
             getActors(input);
+            Utility.hideKeyboard(getActivity());
             return true;
         }
         return false;

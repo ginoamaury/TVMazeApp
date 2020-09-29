@@ -21,6 +21,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.GinoAmaury.TVMazeApp.Interfaces.Favorite.IFavoriteView;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
+import com.GinoAmaury.TVMazeApp.Presenter.FavoritePresenter;
 import com.GinoAmaury.TVMazeApp.Presenter.SettingsPresenter;
 import com.GinoAmaury.TVMazeApp.R;
 import com.GinoAmaury.TVMazeApp.Util.Utility;
@@ -30,10 +33,14 @@ import com.GinoAmaury.TVMazeApp.View.Modals.DialogSettingsFragment;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
+import static com.GinoAmaury.TVMazeApp.Util.Utility.showSnackbar;
+
+public class DashboardActivity extends AppCompatActivity implements View.OnClickListener, IFavoriteView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -44,6 +51,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @BindView(R.id.pager)
     ViewPager viewPager;
 
+    private View view;
+    private FavoritePresenter favoritePresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         showToolbarViewPager();
+        view = findViewById(R.id.contentDash);
     }
 
     private void showToolbarViewPager (){
@@ -77,7 +88,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 showModalFragmentGear();
                 break;
             case R.id.action_fav:
-                Utility.goToNextActivityCleanStack(this, FavoriteActivity.class,false,null);
+                checkFavs();
                 break;
         }
 
@@ -99,4 +110,33 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    private void checkFavs(){
+        favoritePresenter =  new FavoritePresenter(this);
+        favoritePresenter.getFavorites(this);
+    }
+
+
+    @Override
+    public void showResult(boolean result) {
+
+    }
+
+    @Override
+    public void showResultDelete(boolean result) {
+
+    }
+
+    @Override
+    public void showIfExist(boolean result) {
+
+    }
+
+    @Override
+    public void showResultFavorites(ArrayList<Show> shows) {
+            if(shows != null){
+                Utility.goToNextActivityCleanStack(this, FavoriteActivity.class,false,null);
+            }else{
+                showSnackbar(view,this,R.string.errNoFavorites);
+            }
+    }
 }

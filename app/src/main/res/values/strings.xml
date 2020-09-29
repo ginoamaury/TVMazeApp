@@ -25,6 +25,7 @@
     <string name="errPrevious">Upss! We are already on the first page</string>
     <string name="errShows">Upss!We didnt find any more shows</string>
     <string name="errActor">Upss!We didnt find this actor</string>
+    <string name="errNoFavorites">Upss!You still dont have favorites</string>
 
 
     <!-- Settings Fragment -->

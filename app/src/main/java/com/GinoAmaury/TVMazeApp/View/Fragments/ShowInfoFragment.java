@@ -33,6 +33,8 @@ public class ShowInfoFragment extends Fragment {
     TextView titleShow;
     @BindView(R.id.chip)
     Chip chip;
+    @BindView(R.id.chipSchedule)
+    Chip chipSchedule;
     @BindView(R.id.contentSummary)
     TextView summary;
 
@@ -68,9 +70,22 @@ public class ShowInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if(show != null){
-            titleShow.setText(show.getName());
-            chip.setText(show.getGenres().toString());
-            summary.setText(Html.fromHtml(show.getSummary()));
+            if(show.getName() != null){
+                titleShow.setText(show.getName());
+            }
+            if(show.getGenres().size()>0){
+                chip.setVisibility(View.VISIBLE);
+                chip.setText(show.getGenres().toString());
+            }
+            if(show.getSummary()!=null){
+                summary.setVisibility(View.VISIBLE);
+                summary.setText(Html.fromHtml(show.getSummary()));
+            }
+            if(show.getSchedule()!=null){
+                chipSchedule.setVisibility(View.VISIBLE);
+                String schedule = show.getSchedule().getTime() +" "+show.getSchedule().getDays();
+                chipSchedule.setText(schedule);
+            }
         }
     }
 }

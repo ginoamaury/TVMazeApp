@@ -111,7 +111,7 @@ public class FavoriteActivity extends AppCompatActivity implements IFavoriteView
     public void showResultFavorites(ArrayList<Show> shows) {
         if(shows != null){
             Log.d("ERROR","Entro 2");
-            showsAdapter = new ShowsAdapter(shows,this,0);
+            showsAdapter = new ShowsAdapter(shows,this,0,getApplicationContext());
             recyclerViewShows.setItemAnimator(new DefaultItemAnimator());
             recyclerViewShows.setAdapter(showsAdapter);
         }else{

@@ -53,7 +53,7 @@ public class Show implements Serializable {
     private Network network;
     @SerializedName("webChannel")
     @Expose
-    private Object webChannel;
+    private WebChannel webChannel;
     @SerializedName("externals")
     @Expose
     private Externals externals;
@@ -69,6 +69,12 @@ public class Show implements Serializable {
     @SerializedName("_links")
     @Expose
     private Links links;
+    @SerializedName("href")
+    @Expose
+    private String href;
+
+
+
     private final static long serialVersionUID = 7530083064231461944L;
 
     public int getId() {
@@ -183,11 +189,11 @@ public class Show implements Serializable {
         this.network = network;
     }
 
-    public Object getWebChannel() {
+    public WebChannel getWebChannel() {
         return webChannel;
     }
 
-    public void setWebChannel(Object webChannel) {
+    public void setWebChannel(WebChannel webChannel) {
         this.webChannel = webChannel;
     }
 
@@ -229,6 +235,14 @@ public class Show implements Serializable {
 
     public void setLinks(Links links) {
         this.links = links;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 
 

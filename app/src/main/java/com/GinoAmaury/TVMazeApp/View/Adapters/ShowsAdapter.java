@@ -12,7 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.GinoAmaury.TVMazeApp.Interfaces.Favorite.IFavoriteView;
+import com.GinoAmaury.TVMazeApp.Model.DB.SQLConnection;
 import com.GinoAmaury.TVMazeApp.Model.Object.Show;
+import com.GinoAmaury.TVMazeApp.Presenter.FavoritePresenter;
 import com.GinoAmaury.TVMazeApp.R;
 import com.GinoAmaury.TVMazeApp.Util.Utility;
 import com.bumptech.glide.Glide;
@@ -26,7 +29,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
+public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable{
     @Override
     public Filter getFilter() {
         return null;
@@ -37,15 +40,18 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private IOnShowClick onShowClick;
     private int typeView;
 
+    private Context c;
+
     public static final int  TYPE_SHOW_PRINCIPAL = 0;
     public static final int  TYPE_SHOW_SECUNDARY = 1;
 
 
-    public ShowsAdapter(ArrayList<Show> shows, IOnShowClick onShowClick, int typeView) {
+    public ShowsAdapter(ArrayList<Show> shows, IOnShowClick onShowClick, int typeView, Context c) {
         this.shows = shows;
         this.onShowClick = onShowClick;
         this.showsFiltered = shows;
         this.typeView = typeView;
+        this.c = c;
     }
 
     public Show getShow (int pos){
@@ -66,7 +72,7 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         switch (typeView){
             case TYPE_SHOW_PRINCIPAL:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_list_item_principal,parent,false);
-                viewHolder = new ViewHolderShowPrincipal(view,onShowClick);
+                viewHolder = new ViewHolderShowPrincipal(view,onShowClick,c);
                 break;
             case TYPE_SHOW_SECUNDARY:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_list_item_principal,parent,false);
@@ -85,7 +91,9 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (typeView){
             case TYPE_SHOW_PRINCIPAL:
-                ((ViewHolderShowPrincipal) holder).setShowData(showsFiltered.get(position));
+                SQLConnection helper = SQLConnection.getInstance(c);
+                Boolean fav = helper.ifExist(showsFiltered.get(position));
+                ((ViewHolderShowPrincipal) holder).setShowData(showsFiltered.get(position),fav);
                 break;
             case TYPE_SHOW_SECUNDARY:
                 ((ViewHolderShowSecundary) holder).setShowData(showsFiltered.get(position));
@@ -102,7 +110,7 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return showsFiltered.size();
     }
 
-    public class ViewHolderShowPrincipal extends RecyclerView.ViewHolder{
+    public class ViewHolderShowPrincipal extends RecyclerView.ViewHolder implements IFavoriteView{
 
         private IOnShowClick onShowClick;
         @BindView(R.id.showImage)
@@ -112,17 +120,26 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         @BindView(R.id.fab)
         FloatingActionButton fab;
 
-        public ViewHolderShowPrincipal(@NonNull View itemView, IOnShowClick onShowClick) {
+        FavoritePresenter favoritePresenter;
+        boolean favIsActive;
+
+        Context c;
+
+        public ViewHolderShowPrincipal(@NonNull View itemView, IOnShowClick onShowClick, Context c) {
             super(itemView);
             ButterKnife.bind(this,itemView);
             this.onShowClick = onShowClick;
+            this.c = c;
             onClickShowCard(itemView);
             onClickFav();
+            favoritePresenter = new FavoritePresenter(this);
         }
 
-        public void setShowData(Show show){
+        public void setShowData(Show show, boolean fav){
             String name = show.getName();
             titleShow.setText(name);
+            favIsActive = fav;
+            changeFabIcon(fab,fav);
             if(show.getImage()!= null){
                 if(show.getImage().getMedium()!=null && show.getImage().getOriginal()!=null ){
                     String urlImage = show.getImage().getMedium();
@@ -140,15 +157,11 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         }
 
-        private void changeFabIcon (boolean isActive,View v, Context c) {
-            if (isActive) {
-                fab.setImageDrawable(c.getDrawable(R.drawable.ic_heart));
-                Utility.showSnackbar(v, c, R.string.favNotificationDelete);
-                //Deactivate
-            } else {
-                //Activate
-                fab.setImageDrawable(c.getDrawable(R.drawable.ic_heart_full));
-                Utility.showSnackbar(v, c, R.string.favNotification);
+        private void changeFabIcon (FloatingActionButton favIcon,boolean isActive){
+            if(isActive){
+                favIcon.setImageDrawable(c.getDrawable(R.drawable.ic_heart_full));
+            }else{
+                favIcon.setImageDrawable(c.getDrawable(R.drawable.ic_heart));
             }
         }
 
@@ -156,7 +169,11 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if(favIsActive){
+                        favoritePresenter.deleteFav(getShow(getAdapterPosition()),c);
+                    }else {
+                        favoritePresenter.addFav(getShow(getAdapterPosition()),c);
+                    }
                     onShowClick.onShowClick(getAdapterPosition(), Utility.CLICKADDFAV);
                 }
             });
@@ -169,6 +186,32 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     onShowClick.onShowClick(getAdapterPosition(), Utility.CLICKCARD);
                 }
             });
+        }
+
+        @Override
+        public void showResult(boolean result) {
+            if(result){
+                favIsActive = true;
+                changeFabIcon(fab,true);
+            }
+        }
+
+        @Override
+        public void showResultDelete(boolean result) {
+            if(result){
+                favIsActive = false;
+                changeFabIcon(fab,false);
+            }
+        }
+
+        @Override
+        public void showIfExist(boolean result) {
+
+        }
+
+        @Override
+        public void showResultFavorites(ArrayList<Show> shows) {
+
         }
     }
 

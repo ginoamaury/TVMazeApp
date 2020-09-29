@@ -5,79 +5,83 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <TextView
-            android:id="@+id/titleEpisode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:fontFamily="sans-serif"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imagerEpísode" />
-
-        <ImageView
-            android:id="@+id/imagerEpísode"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:src="@mipmap/ic_tvmaze"
-            app:layout_constraintBottom_toTopOf="@id/titleEpisode"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
 
-        <TextView
-            android:id="@+id/season"
-            style="@style/LoginText"
-            android:layout_marginVertical="8dp"
-            app:layout_constraintBottom_toTopOf="@id/sumary"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleEpisode"/>
-
-        <TextView
-            android:id="@+id/sumary"
-            android:text="@string/summary"
-            style="@style/LoginText"
-            android:textSize="18dp"
-            android:layout_marginVertical="20dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/season"/>
-
-        <TextView
-            android:id="@+id/sumaryContent"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/LoginText"
-            android:textAlignment="textStart"
-            android:layout_marginHorizontal="20dp"
-            android:textSize="15dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sumary"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/titleEpisode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="sans-serif"
+               android:textAlignment="center"
+                android:textSize="20dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imagerEpísode" />
+
+            <ImageView
+                android:id="@+id/imagerEpísode"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:src="@mipmap/ic_tvmaze"
+                app:layout_constraintBottom_toTopOf="@id/titleEpisode"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
+            <TextView
+                android:id="@+id/season"
+                style="@style/LoginText"
+                android:layout_marginVertical="8dp"
+                app:layout_constraintBottom_toTopOf="@id/sumary"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleEpisode"/>
 
+            <TextView
+                android:id="@+id/sumary"
+                android:text="@string/summary"
+                style="@style/LoginText"
+                android:textSize="18dp"
+                android:visibility="invisible"
+                android:layout_marginVertical="20dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/season"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/sumaryContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginText"
+                android:textAlignment="textStart"
+                android:layout_marginHorizontal="20dp"
+                android:textSize="15dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sumary"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
