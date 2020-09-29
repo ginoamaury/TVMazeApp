@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
     @BindView(R.id.fingerPrintImage)
     ImageView fingerPrint;
 
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
             presenter = new LoginPresenter(this);
             login.setOnClickListener(this);
             fingerPrint.setOnClickListener(this);
+            view = findViewById(R.id.contentMain);
         }
     }
 
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
                     @Override
                     public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                         super.onAuthenticationError(errorCode, errString);
-                        showSnackbarTopMsg(getCurrentFocus(),getApplicationContext(),getResources().getString(R.string.errorAuth) + errString);
+                        showSnackbarTopMsg(view,getApplicationContext(),getResources().getString(R.string.errorAuth) + errString);
                     }
 
                     @Override
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
                     @Override
                     public void onAuthenticationFailed() {
                         super.onAuthenticationFailed();
-                        showSnackbarTopMsg(getCurrentFocus(),getApplicationContext(),getResources().getString(R.string.errorAuthFailed));
+                        showSnackbarTopMsg(view,getApplicationContext(),getResources().getString(R.string.errorAuthFailed));
                     }
                 });
 
@@ -113,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
 
     @Override
     public void showResult(boolean result) {
-        if(result){
-            showSnackbarTopMsg(getCurrentFocus(),this,getResources().getString(R.string.wrongPassword));
+        if(!result){
+            showSnackbarTopMsg(view,this,getResources().getString(R.string.wrongPassword));
         }else{
             goToNextActivityCleanStack(this, DashboardActivity.class,true,null);
         }
