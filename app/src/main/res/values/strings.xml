@@ -16,6 +16,16 @@
     <string name="biometricSubtile">Login using your fingerprint </string>
     <string name="biometricNegativeButton">I want to use my password </string>
 
+    <!-- Episodes-->
+    <string name="episodesSeason">Season</string>
+    <string name="summary">Summary</string>
+    <string name="shows">Shows</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="errPrevious">Upss! We are already on the first page</string>
+    <string name="errShows">Upss!We didnt find any more shows</string>
+    <string name="errActor">Upss!We didnt find this actor</string>
+    <string name="errNoFavorites">Upss!You still dont have favorites</string>
 
 
     <!-- Settings Fragment -->
@@ -31,4 +41,28 @@
 
     <!-- MENU -->
     <string name="settingsMenu">Settings</string>
+    <string name="favMenu">Favorites</string>
+
+    <!-- TABS VIEW PAGER -->
+    <string name="viewPagerShows">Shows</string>
+    <string name="viewPagerSearch">Search</string>
+    <string name="viewPagerInfo">Information</string>
+    <string name="viewPagerEpisodes">Episodes</string>
+
+    <!-- FAV -->
+    <string name="favNotification">It is now one of your favorite shows</string>
+    <string name="favNotificationDelete">It has been removed from your favorites</string>
+    <string name="favErr">Upss! An error has occurred</string>
+    <string name="favTitle">Your Favorites</string>
+
+
+    <string name="findShow">Search your favorite show</string>
+    <string name="findPeople">Search your favorite actor</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_show">ScrollingActivity</string>
+
+    <string name="action_settings">Settings</string>
+
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_shows"
+        android:enabled="true"
+        android:icon="@drawable/ic_ticket"
+        android:title="Shows"/>
+    <item
+        android:id="@+id/menu_people"
+        android:enabled="true"
+        android:icon="@drawable/ic_actor"
+        android:title="Actors"/>
+</menu>

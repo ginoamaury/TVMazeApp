@@ -24,8 +24,8 @@ import java.util.concurrent.Executor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.GinoAmaury.TVMazeApp.Util.Utility.GoToNextActivityCleanStack;
 import static com.GinoAmaury.TVMazeApp.Util.Utility.getPreference;
+import static com.GinoAmaury.TVMazeApp.Util.Utility.goToNextActivityCleanStack;
 import static com.GinoAmaury.TVMazeApp.Util.Utility.showSnackbarTopMsg;
 
 public class MainActivity extends AppCompatActivity implements ILoginView, View.OnClickListener {
@@ -40,18 +40,20 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
     @BindView(R.id.fingerPrintImage)
     ImageView fingerPrint;
 
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getPreference(this,getString(R.string.dataSesion),getString(R.string.passwordSesion)).equals(getString(R.string.noData))){
-            GoToNextActivityCleanStack(this,DashboardActivity.class,true,null);
+            goToNextActivityCleanStack(this,DashboardActivity.class,true,null);
         }else{
             setContentView(R.layout.activity_main);
             ButterKnife.bind(this);
             presenter = new LoginPresenter(this);
             login.setOnClickListener(this);
             fingerPrint.setOnClickListener(this);
+            view = findViewById(R.id.contentMain);
         }
     }
 
@@ -64,20 +66,20 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
                     @Override
                     public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                         super.onAuthenticationError(errorCode, errString);
-                        showSnackbarTopMsg(getCurrentFocus(),getApplicationContext(),getResources().getString(R.string.errorAuth) + errString);
+                        showSnackbarTopMsg(view,getApplicationContext(),getResources().getString(R.string.errorAuth) + errString);
                     }
 
                     @Override
                     public void onAuthenticationSucceeded(
                             @NonNull BiometricPrompt.AuthenticationResult result) {
                         super.onAuthenticationSucceeded(result);
-                        GoToNextActivityCleanStack(MainActivity.this,DashboardActivity.class,true,null);
+                        goToNextActivityCleanStack(MainActivity.this,DashboardActivity.class,true,null);
                     }
 
                     @Override
                     public void onAuthenticationFailed() {
                         super.onAuthenticationFailed();
-                        showSnackbarTopMsg(getCurrentFocus(),getApplicationContext(),getResources().getString(R.string.errorAuthFailed));
+                        showSnackbarTopMsg(view,getApplicationContext(),getResources().getString(R.string.errorAuthFailed));
                     }
                 });
 
@@ -113,10 +115,10 @@ public class MainActivity extends AppCompatActivity implements ILoginView, View.
 
     @Override
     public void showResult(boolean result) {
-        if(result){
-            showSnackbarTopMsg(getCurrentFocus(),this,getResources().getString(R.string.wrongPassword));
+        if(!result){
+            showSnackbarTopMsg(view,this,getResources().getString(R.string.wrongPassword));
         }else{
-            GoToNextActivityCleanStack(this, DashboardActivity.class,true,null);
+            goToNextActivityCleanStack(this, DashboardActivity.class,true,null);
         }
     }
 

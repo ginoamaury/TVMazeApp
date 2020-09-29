@@ -34,6 +34,7 @@ public class DialogSettingsFragment extends DialogFragment implements ISettingsV
     MaterialButton setPassword;
 
     private SettingsPresenter presenter;
+    private View view;
 
     @NonNull
     @Override
@@ -53,6 +54,7 @@ public class DialogSettingsFragment extends DialogFragment implements ISettingsV
             case R.id.btn_setPassword:
                 String password = input.getText().toString();
                 if(validateFormSettings(v,password)){
+                    view = v;
                     presenter.setPassword(getContext(),password);
                 }
                 break;
@@ -74,9 +76,9 @@ public class DialogSettingsFragment extends DialogFragment implements ISettingsV
     @Override
     public void showResult(boolean result) {
         if(result){
-            showSnackbarTopMsg(getActivity().getCurrentFocus(),getContext(),getResources().getString(R.string.ok_message_pass));
+            showSnackbarTopMsg(view,getContext(),getResources().getString(R.string.ok_message_pass));
         }else{
-            showSnackbarTopMsg(getActivity().getCurrentFocus(),getContext(),getResources().getString(R.string.bad_message_pass));
+            showSnackbarTopMsg(view,getContext(),getResources().getString(R.string.bad_message_pass));
         }
     }
 }
