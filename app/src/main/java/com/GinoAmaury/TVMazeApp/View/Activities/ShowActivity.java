@@ -113,7 +113,6 @@ public class ShowActivity extends AppCompatActivity implements IFavoriteView {
             @Override
             public void onClick(View v) {
                focus = v;
-                Log.d("ISACTIVE",favIsActive+"");
                 if(favIsActive){
                      favoritePresenter.deleteFav(show,getApplicationContext());
                 }else {
