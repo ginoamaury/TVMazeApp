@@ -1,6 +1,6 @@
 package com.GinoAmaury.TVMazeApp.View.Adapters;
 
-import android.util.Log;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +12,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
 import com.GinoAmaury.TVMazeApp.R;
 import com.GinoAmaury.TVMazeApp.Util.Utility;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -31,8 +32,8 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return null;
     }
 
-    private  ArrayList<Search> shows;
-    private ArrayList<Search> showsFiltered;
+    private  ArrayList<Show> shows;
+    private ArrayList<Show> showsFiltered;
     private IOnShowClick onShowClick;
     private int typeView;
 
@@ -40,16 +41,22 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public static final int  TYPE_SHOW_SECUNDARY = 1;
 
 
-    public ShowsAdapter(ArrayList<Search> shows, IOnShowClick onShowClick, int typeView) {
+    public ShowsAdapter(ArrayList<Show> shows, IOnShowClick onShowClick, int typeView) {
         this.shows = shows;
         this.onShowClick = onShowClick;
         this.showsFiltered = shows;
         this.typeView = typeView;
     }
 
-    public Search getShow (int pos){
+    public Show getShow (int pos){
         return showsFiltered.get(pos);
     }
+
+    public void checkFav (int pos, Context c){
+
+    }
+
+
 
     @NonNull
     @Override
@@ -102,15 +109,18 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ImageView showImage;
         @BindView(R.id.titleShow)
         TextView titleShow;
+        @BindView(R.id.fab)
+        FloatingActionButton fab;
 
         public ViewHolderShowPrincipal(@NonNull View itemView, IOnShowClick onShowClick) {
             super(itemView);
             ButterKnife.bind(this,itemView);
             this.onShowClick = onShowClick;
             onClickShowCard(itemView);
+            onClickFav();
         }
 
-        public void setShowData(Search show){
+        public void setShowData(Show show){
             String name = show.getName();
             titleShow.setText(name);
             if(show.getImage()!= null){
@@ -130,6 +140,28 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         }
 
+        private void changeFabIcon (boolean isActive,View v, Context c) {
+            if (isActive) {
+                fab.setImageDrawable(c.getDrawable(R.drawable.ic_heart));
+                Utility.showSnackbar(v, c, R.string.favNotificationDelete);
+                //Deactivate
+            } else {
+                //Activate
+                fab.setImageDrawable(c.getDrawable(R.drawable.ic_heart_full));
+                Utility.showSnackbar(v, c, R.string.favNotification);
+            }
+        }
+
+        private void onClickFav() {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    onShowClick.onShowClick(getAdapterPosition(), Utility.CLICKADDFAV);
+                }
+            });
+        }
+
         private void onClickShowCard(View v){
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -147,6 +179,8 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ImageView showImage;
         @BindView(R.id.titleShow)
         TextView titleShow;
+        @BindView(R.id.fab)
+        FloatingActionButton fab;
 
         public ViewHolderShowSecundary(@NonNull View itemView, IOnShowClick onShowClick) {
             super(itemView);
@@ -154,7 +188,7 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             this.onShowClick = onShowClick;
         }
 
-        public void setShowData(Search show){
+        public void setShowData(Show show){
             titleShow.setText(show.getName());
 
             RequestOptions requestOptions = new RequestOptions()
@@ -176,7 +210,6 @@ public class ShowsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             super(itemView);
         }
     }
-
 
 
 }

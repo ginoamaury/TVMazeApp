@@ -18,10 +18,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.GinoAmaury.TVMazeApp.Interfaces.Search.ISearchShowView;
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Interfaces.Search.Show.ISearchShowView;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
 import com.GinoAmaury.TVMazeApp.Presenter.SearchShowPresenter;
-import com.GinoAmaury.TVMazeApp.Presenter.ShowPresenter;
 import com.GinoAmaury.TVMazeApp.R;
 import com.GinoAmaury.TVMazeApp.Util.Utility;
 import com.GinoAmaury.TVMazeApp.View.Activities.ShowActivity;
@@ -111,7 +110,7 @@ public class SearchShowFragment extends Fragment implements ISearchShowView, Edi
     }
 
     @Override
-    public void showResult(ArrayList<Search> shows) {
+    public void showResult(ArrayList<Show> shows) {
         if(shows != null){
             Log.d("SHOW", shows.get(0).getName() +"-");
             showsAdapter = new ShowsAdapter(shows,this,0);

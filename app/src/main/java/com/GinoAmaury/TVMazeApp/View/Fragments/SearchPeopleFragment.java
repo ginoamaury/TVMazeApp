@@ -2,43 +2,64 @@ package com.GinoAmaury.TVMazeApp.View.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.GinoAmaury.TVMazeApp.Interfaces.Search.Actor.ISearchActorView;
+import com.GinoAmaury.TVMazeApp.Model.Object.Episode;
+import com.GinoAmaury.TVMazeApp.Model.Object.Person;
+import com.GinoAmaury.TVMazeApp.Presenter.SearchActorPresenter;
+import com.GinoAmaury.TVMazeApp.Presenter.SearchShowPresenter;
 import com.GinoAmaury.TVMazeApp.R;
+import com.GinoAmaury.TVMazeApp.View.Adapters.ActorsAdapter;
+import com.GinoAmaury.TVMazeApp.View.Adapters.IOnActorClick;
+import com.GinoAmaury.TVMazeApp.View.Adapters.ShowsAdapter;
+import com.GinoAmaury.TVMazeApp.View.Modals.DialogActorFragment;
+import com.GinoAmaury.TVMazeApp.View.Modals.DialogEpisodeFragment;
+import com.ethanhua.skeleton.Skeleton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchPeopleFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SearchPeopleFragment extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.GinoAmaury.TVMazeApp.Util.Utility.showSnackbar;
+
+
+public class SearchPeopleFragment extends Fragment implements ISearchActorView, EditText.OnEditorActionListener, IOnActorClick {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    @BindView(R.id.recyclerPeople)
+    RecyclerView recyclerViewShows;
+
+    @BindView(R.id.inputSearch)
+    EditText inputSearch;
+
+    SearchActorPresenter presenter;
+    ActorsAdapter actorsAdapter;
 
     public SearchPeopleFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchPeopleFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static SearchPeopleFragment newInstance(String param1, String param2) {
         SearchPeopleFragment fragment = new SearchPeopleFragment();
         Bundle args = new Bundle();
@@ -60,7 +81,65 @@ public class SearchPeopleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_people, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_people, container, false);
+        ButterKnife.bind(this,view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        inputSearch.setOnEditorActionListener(this);
+    }
+
+    private void showPreviewLoading (){
+        recyclerViewShows.setLayoutManager(new GridLayoutManager(getContext(),2));
+        Skeleton.bind(recyclerViewShows)
+                .adapter(actorsAdapter)
+                .shimmer(true)      // whether show shimmer animation.                      default is true
+                .count(12)          // the recycler view item count.                        default is 10
+                .color(R.color.White)       // the shimmer color.                                   default is #a2878787
+                .angle(20)          // the shimmer angle.                                   default is 20;
+                .duration(900)     // the shimmer animation duration.                      default is 1000;
+                .frozen(false)      // whether frozen recyclerView during skeleton showing  default is true;
+                .load(R.layout.show_list_item_principal_preview)
+                .show();
+    }
+
+    @Override
+    public void showResult(ArrayList<Person> actors) {
+        if(actors != null){
+            actorsAdapter = new ActorsAdapter(actors,this);
+            recyclerViewShows.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewShows.setAdapter(actorsAdapter);
+        }else{
+            showSnackbar(getView(),getContext(),R.string.errActor);
+        }
+    }
+
+    private void getActors(String name){
+        presenter = new SearchActorPresenter(this);
+        presenter.getActors(name);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if ( actionId == EditorInfo.IME_ACTION_DONE) {
+            String input = inputSearch.getText().toString();
+            showPreviewLoading();
+            getActors(input);
+            return true;
+        }
+        return false;
+    }
+
+    private void showModalFragmentActor (Person actor){
+        DialogActorFragment dialogActorFragment =  DialogActorFragment.newInstance(actor);
+        dialogActorFragment.show(getActivity().getSupportFragmentManager(),"");
+    }
+
+    @Override
+    public void onActorClick(int pos) {
+        showModalFragmentActor(actorsAdapter.getActor(pos));
     }
 }

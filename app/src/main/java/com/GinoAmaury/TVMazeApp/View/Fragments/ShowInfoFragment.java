@@ -7,13 +7,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
 import com.GinoAmaury.TVMazeApp.R;
 import com.google.android.material.chip.Chip;
 
@@ -27,7 +26,7 @@ import butterknife.ButterKnife;
  */
 public class ShowInfoFragment extends Fragment {
 
-    private Search show;
+    private Show show;
     private static final String SHOWARG = "show";
 
     @BindView(R.id.titleShow)
@@ -40,7 +39,7 @@ public class ShowInfoFragment extends Fragment {
     public ShowInfoFragment() {
     }
 
-    public static ShowInfoFragment newInstance(Search show) {
+    public static ShowInfoFragment newInstance(Show show) {
         ShowInfoFragment fragment = new ShowInfoFragment();
         Bundle args = new Bundle();
         args.putSerializable(SHOWARG, show);
@@ -52,7 +51,7 @@ public class ShowInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            show = (Search) getArguments().getSerializable(SHOWARG);
+            show = (Show) getArguments().getSerializable(SHOWARG);
         }
     }
 

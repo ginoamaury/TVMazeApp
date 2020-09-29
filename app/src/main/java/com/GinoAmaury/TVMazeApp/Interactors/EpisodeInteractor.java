@@ -3,7 +3,6 @@ package com.GinoAmaury.TVMazeApp.Interactors;
 import com.GinoAmaury.TVMazeApp.API.API;
 import com.GinoAmaury.TVMazeApp.Interfaces.Episodes.IEpisodesInteractor;
 import com.GinoAmaury.TVMazeApp.Model.Object.Episode;
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
 import com.GinoAmaury.TVMazeApp.Presenter.EpisodePresenter;
 
 import java.util.ArrayList;

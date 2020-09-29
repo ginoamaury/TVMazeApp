@@ -23,6 +23,8 @@ import android.widget.EditText;
 
 import com.GinoAmaury.TVMazeApp.Presenter.SettingsPresenter;
 import com.GinoAmaury.TVMazeApp.R;
+import com.GinoAmaury.TVMazeApp.Util.Utility;
+import com.GinoAmaury.TVMazeApp.View.Activities.FavoriteActivity;
 import com.GinoAmaury.TVMazeApp.View.Adapters.ViewPagerAdapterDashboard;
 import com.GinoAmaury.TVMazeApp.View.Modals.DialogSettingsFragment;
 import com.google.android.material.appbar.AppBarLayout;
@@ -73,6 +75,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         switch (id){
             case R.id.action_gear:
                 showModalFragmentGear();
+                break;
+            case R.id.action_fav:
+                Utility.goToNextActivityCleanStack(this, FavoriteActivity.class,false,null);
                 break;
         }
 

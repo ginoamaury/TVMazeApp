@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.GinoAmaury.TVMazeApp.Interfaces.Shows.IShowView;
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
 import com.GinoAmaury.TVMazeApp.Presenter.ShowPresenter;
 import com.GinoAmaury.TVMazeApp.R;
 import com.GinoAmaury.TVMazeApp.Util.Utility;
@@ -33,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.GinoAmaury.TVMazeApp.Util.Utility.showSnackbar;
-import static com.GinoAmaury.TVMazeApp.Util.Utility.showSnackbarTopMsg;
 
 public class ShowsFragment extends Fragment implements IShowView, IOnShowClick, View.OnClickListener {
 
@@ -120,7 +118,7 @@ public class ShowsFragment extends Fragment implements IShowView, IOnShowClick, 
     }
 
     @Override
-    public void showResult(ArrayList<Search> shows) {
+    public void showResult(ArrayList<Show> shows) {
         if(shows != null){
             showsAdapter = new ShowsAdapter(shows,this,0);
             recyclerViewShows.setItemAnimator(new DefaultItemAnimator());
@@ -133,7 +131,15 @@ public class ShowsFragment extends Fragment implements IShowView, IOnShowClick, 
 
     @Override
     public void onShowClick(int pos, String typeClick) {
-        Utility.goToNextActivityCleanStackShow(getActivity(), ShowActivity.class,false,null,showsAdapter.getShow(pos));
+        switch (typeClick){
+            case Utility.CLICKCARD:
+                Utility.goToNextActivityCleanStackShow(getActivity(), ShowActivity.class,false,null,showsAdapter.getShow(pos));
+                break;
+            case Utility.CLICKADDFAV:
+
+                break;
+        }
+
     }
 
     @Override

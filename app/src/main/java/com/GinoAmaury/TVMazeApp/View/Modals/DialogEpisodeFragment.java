@@ -66,8 +66,22 @@ public class DialogEpisodeFragment extends DialogFragment {
             titleEpisode.setText(name);
             String sea = getContext().getString(R.string.episodesSeason) + ": "+ episode.getSeason();
             season.setText(sea);
-            String urlImage = episode.getImage().getOriginal();
-            Utility.showImage(v,image,urlImage);
+
+            if(episode.getImage()!= null){
+                if(episode.getImage().getMedium()!=null && episode.getImage().getOriginal()!=null ){
+                    String urlImage = episode.getImage().getMedium();
+                    Utility.showImage(v,image,urlImage);
+                }else if(episode.getImage().getMedium()==null && episode.getImage().getOriginal()!=null ){
+                    String urlImage = episode.getImage().getOriginal();
+                    Utility.showImage(v,image,urlImage);
+                }else if(episode.getImage().getMedium()!=null && episode.getImage().getOriginal()==null ){
+                    String urlImage = episode.getImage().getMedium();
+                    Utility.showImage(v,image,urlImage);
+                }
+            }else{
+                Utility.showImage(v,image,"noimage");
+            }
+
             sumaryContent.setText(Html.fromHtml(episode.getSummary()));
         }
     }

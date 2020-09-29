@@ -21,9 +21,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/InputEditPasswordWhite"
+           android:id="@+id/inputSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textFilter" />
+            android:inputType="textFilter"
+            android:imeOptions="actionDone"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

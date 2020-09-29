@@ -3,7 +3,7 @@ package com.GinoAmaury.TVMazeApp.Presenter;
 import com.GinoAmaury.TVMazeApp.Interactors.ShowInteractor;
 import com.GinoAmaury.TVMazeApp.Interfaces.Shows.IShowPresenter;
 import com.GinoAmaury.TVMazeApp.Interfaces.Shows.IShowView;
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class ShowPresenter implements IShowPresenter {
     }
 
     @Override
-    public void showResult(ArrayList<Search> shows) {
+    public void showResult(ArrayList<Show> shows) {
         showView.showResult(shows);
     }
 }

@@ -4,14 +4,13 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Interfaces.Favorite.IFavoriteView;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
+import com.GinoAmaury.TVMazeApp.Presenter.FavoritePresenter;
 import com.GinoAmaury.TVMazeApp.Util.Utility;
 import com.GinoAmaury.TVMazeApp.View.Adapters.ViewPAgerAdapterShow;
-import com.GinoAmaury.TVMazeApp.View.Adapters.ViewPagerAdapterDashboard;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,10 +23,12 @@ import android.widget.ImageView;
 import com.GinoAmaury.TVMazeApp.R;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShowActivity extends AppCompatActivity {
+public class ShowActivity extends AppCompatActivity implements IFavoriteView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -41,20 +42,31 @@ public class ShowActivity extends AppCompatActivity {
     FloatingActionButton favFab;
     @BindView(R.id.show_image)
     ImageView showImage;
-    private Search show;
+    private Show show;
 
     private boolean favIsActive;
+    private View focus;
+
+    FavoritePresenter favoritePresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
         ButterKnife.bind(this);
-        show = (Search) getIntent().getSerializableExtra("SHOW");
+        favoritePresenter = new FavoritePresenter(this);
+        show = (Show) getIntent().getSerializableExtra("SHOW");
         addToolbar();
         showToolbarViewPager();
         addFavClick(favFab);
         setImage();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        favoritePresenter.findFav(show,getApplicationContext());
     }
 
     private void setImage (){
@@ -100,20 +112,23 @@ public class ShowActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFabIcon(favFab,favIsActive,v);
+               focus = v;
+                Log.d("ISACTIVE",favIsActive+"");
+                if(favIsActive){
+                     favoritePresenter.deleteFav(show,getApplicationContext());
+                }else {
+                    favoritePresenter.addFav(show,getApplicationContext());
+                }
+
             }
         });
     }
 
-    private void changeFabIcon (FloatingActionButton favIcon,boolean isActive,View v){
+    private void changeFabIcon (FloatingActionButton favIcon,boolean isActive){
         if(isActive){
-            favIcon.setImageDrawable(getDrawable(R.drawable.ic_heart));
-            Utility.showSnackbar(v,getBaseContext(),R.string.favNotificationDelete);
-            favIsActive = false;
-        }else{
-            favIsActive = true;
             favIcon.setImageDrawable(getDrawable(R.drawable.ic_heart_full));
-            Utility.showSnackbar(v,getBaseContext(),R.string.favNotification);
+        }else{
+            favIcon.setImageDrawable(getDrawable(R.drawable.ic_heart));
         }
     }
 
@@ -122,5 +137,43 @@ public class ShowActivity extends AppCompatActivity {
         ViewPAgerAdapterShow pagerAdapter = new ViewPAgerAdapterShow(getSupportFragmentManager(),tituloTabs,show);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void showResult(boolean result) {
+        if(result){
+            favIsActive = true;
+            changeFabIcon(favFab,true);
+            Utility.showSnackbar(focus,getApplicationContext(),R.string.favNotification);
+        }else{
+            Utility.showSnackbar(focus,getApplicationContext(),R.string.favErr);
+        }
+    }
+
+    @Override
+    public void showResultDelete(boolean result) {
+        if(result){
+            favIsActive = false;
+            changeFabIcon(favFab,false);
+            Utility.showSnackbar(focus,getApplicationContext(),R.string.favNotificationDelete);
+        }else{
+            Utility.showSnackbar(focus,getApplicationContext(),R.string.favErr);
+        }
+    }
+
+    @Override
+    public void showIfExist(boolean result) {
+        if (result){
+            favIsActive = true;
+            changeFabIcon(favFab,true);
+        }else{
+            favIsActive = false;
+            changeFabIcon(favFab,false);
+        }
+    }
+
+    @Override
+    public void showResultFavorites(ArrayList<Show> shows) {
+
     }
 }

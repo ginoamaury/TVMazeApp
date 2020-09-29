@@ -1,23 +1,22 @@
 package com.GinoAmaury.TVMazeApp.View.Adapters;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
 import com.GinoAmaury.TVMazeApp.View.Fragments.ShowEpisodesFragment;
 import com.GinoAmaury.TVMazeApp.View.Fragments.ShowInfoFragment;
 
 public class ViewPAgerAdapterShow  extends FragmentStatePagerAdapter {
     private  String [] tituloTabs;
-    private Search show;
+    private Show show;
     private static final String SHOWARG = "show";
 
-    public ViewPAgerAdapterShow (FragmentManager fm, String [] tituloTabs, Search show) {
+    public ViewPAgerAdapterShow (FragmentManager fm, String [] tituloTabs, Show show) {
         super(fm);
         this.tituloTabs = tituloTabs;
         this.show = show;

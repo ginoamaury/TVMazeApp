@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
 import com.GinoAmaury.TVMazeApp.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -22,6 +22,24 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 public class Utility {
+
+    public static final String TABLE_FAVORITE="favorite";
+    public static final String ATRIBUTE_SHOW_ID="id";
+    public static final String ATRIBUTE_SHOW_NAME="name";
+    public static final String ATRIBUTE_SHOW_IMAGE="image";
+    public static final String ATRIBUTE_SHOW_GENRE="genre";
+    public static final String ATRIBUTE_SHOW_SUMMARY="summary";
+
+    //SQL
+    public static final String CREATE_TABLE_FAV = "CREATE TABLE "+TABLE_FAVORITE+
+            "("+
+            ATRIBUTE_SHOW_ID+" INTEGER PRIMARY KEY,"+
+            ATRIBUTE_SHOW_NAME+" TEXT,"+
+            ATRIBUTE_SHOW_IMAGE+ " TEXT,"+
+            ATRIBUTE_SHOW_GENRE+" TEXT,"+
+            ATRIBUTE_SHOW_SUMMARY+" TEXT)";
+
+
 
     //Static String Card Product
     public static final String CLICKCARD="cardShow";
@@ -86,7 +104,7 @@ public class Utility {
                 .apply(requestOptions).into(imageView);
     }
 
-    public static void goToNextActivityCleanStackShow(Activity activity, Class clase, boolean finaliza, ArrayList<Extra> params, Search show)
+    public static void goToNextActivityCleanStackShow(Activity activity, Class clase, boolean finaliza, ArrayList<Extra> params, Show show)
     {
         Intent intent = new Intent(activity, clase ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("SHOW", show);

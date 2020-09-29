@@ -19,10 +19,12 @@
     <!-- Episodes-->
     <string name="episodesSeason">Season</string>
     <string name="summary">Summary</string>
+    <string name="shows">Shows</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="errPrevious">Upss! We are already on the first page</string>
     <string name="errShows">Upss!We didnt find any more shows</string>
+    <string name="errActor">Upss!We didnt find this actor</string>
 
 
     <!-- Settings Fragment -->
@@ -38,6 +40,7 @@
 
     <!-- MENU -->
     <string name="settingsMenu">Settings</string>
+    <string name="favMenu">Favorites</string>
 
     <!-- TABS VIEW PAGER -->
     <string name="viewPagerShows">Shows</string>
@@ -46,8 +49,10 @@
     <string name="viewPagerEpisodes">Episodes</string>
 
     <!-- FAV -->
-    <string name="favNotification">It is now one of your favorite products</string>
+    <string name="favNotification">It is now one of your favorite shows</string>
     <string name="favNotificationDelete">It has been removed from your favorites</string>
+    <string name="favErr">Upss! An error has occurred</string>
+    <string name="favTitle">Your Favorites</string>
 
 
     <string name="findShow">Search your favorite show</string>

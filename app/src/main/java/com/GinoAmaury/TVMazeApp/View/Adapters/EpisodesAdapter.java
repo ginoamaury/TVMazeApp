@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.GinoAmaury.TVMazeApp.Model.Object.Episode;
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
 import com.GinoAmaury.TVMazeApp.R;
 import com.GinoAmaury.TVMazeApp.Util.Utility;
 

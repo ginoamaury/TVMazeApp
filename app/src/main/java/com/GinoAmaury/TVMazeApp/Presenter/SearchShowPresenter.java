@@ -1,9 +1,9 @@
 package com.GinoAmaury.TVMazeApp.Presenter;
 
 import com.GinoAmaury.TVMazeApp.Interactors.SearchShowInteractor;
-import com.GinoAmaury.TVMazeApp.Interfaces.Search.ISearchShowPresenter;
-import com.GinoAmaury.TVMazeApp.Interfaces.Search.ISearchShowView;
-import com.GinoAmaury.TVMazeApp.Model.Object.Search;
+import com.GinoAmaury.TVMazeApp.Interfaces.Search.Show.ISearchShowPresenter;
+import com.GinoAmaury.TVMazeApp.Interfaces.Search.Show.ISearchShowView;
+import com.GinoAmaury.TVMazeApp.Model.Object.Show;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class SearchShowPresenter implements ISearchShowPresenter {
     }
 
     @Override
-    public void showResult(ArrayList<Search> shows) {
+    public void showResult(ArrayList<Show> shows) {
         searchShowView.showResult(shows);
     }
 }

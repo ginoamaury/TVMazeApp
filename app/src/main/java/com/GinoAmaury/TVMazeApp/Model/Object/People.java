@@ -3,15 +3,16 @@ package com.GinoAmaury.TVMazeApp.Model.Object;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class Query {
+public class People implements Serializable {
     @SerializedName("score")
     @Expose
     private double score;
-    @SerializedName("show")
+    @SerializedName("person")
     @Expose
-    private Search show;
-
+    private Person person;
+    private final static long serialVersionUID = 3510346886177860859L;
 
     public double getScore() {
         return score;
@@ -21,12 +22,13 @@ public class Query {
         this.score = score;
     }
 
-    public Search getShow() {
-        return show;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setShow(Search show) {
-        this.show = show;
+    public void setPerson(Person person) {
+        this.person = person;
     }
+
 }
 
